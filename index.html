@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7e9">
+    <title>Balance Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#" aria-label="Balance Lab home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>balance<span class="wordmark-light">lab</span></span>
+        </a>
+        <span class="edition-tag"><span class="edition-dot"></span> MATH STUDIO <span>01</span></span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> THE BALANCE ROOM</p>
+          <h1 id="page-title">A little tilt.<br><span>A lot of balance.</span></h1>
+        </div>
+        <div class="equation-preview">
+          <label class="preview-label" for="originalEquationInput">ORIGINAL EQUATION</label>
+          <input class="preview-equation" id="originalEquationInput" type="text" value="x - 3.25 = 8.75" maxlength="60" autocomplete="off" spellcheck="false">
+          <span class="preview-spark" aria-hidden="true">✳</span>
+          <button class="next-equation" id="nextEquationButton" type="button" aria-label="Next original equation">Next <span aria-hidden="true">&#8594;</span></button>
+        </div>
+      </section>
+
+      <section class="balance-room" aria-label="Balance scale demonstration">
+        <div class="equation-stack">
+          <div class="equation-row">
+            <label class="preview-label" for="leftEquationInput">HARRY'S EQUATION</label>
+            <div class="equation-fields">
+              <input class="equation-input" id="leftEquationInput" type="text" value="x - 3.25" maxlength="30" autocomplete="off" spellcheck="false" aria-label="Left side of Harry's equation" aria-describedby="equationError">
+              <span class="equation-equals" aria-hidden="true">=</span>
+              <input class="equation-input" id="rightEquationInput" type="text" value="8.75" maxlength="30" autocomplete="off" spellcheck="false" aria-label="Right side of Harry's equation" aria-describedby="equationError">
+            </div>
+          </div>
+          <span class="equation-error" id="equationError" role="status" hidden>Use one or two terms in each box.</span>
+        </div>
+
+        <div class="side-panel left-panel" data-side="left">
+          <div class="panel-topline">
+            <span class="side-icon left-icon" aria-hidden="true">L</span>
+            <span class="side-name">LEFT PAN</span>
+          </div>
+          <strong class="side-value" id="leftValue">0</strong>
+          <span class="side-caption">SIDE VALUE</span>
+          <div class="edit-history">
+            <span class="history-label">EDIT HISTORY</span>
+            <ol class="pan-history" id="leftHistory" aria-label="Left side equation edit history">
+              <li>x - 3.25</li>
+            </ol>
+          </div>
+          <span class="side-accent" aria-hidden="true"></span>
+        </div>
+
+        <figure class="balance-figure">
+          <svg class="balance-svg" id="balanceScale" data-state="balanced" viewBox="120 80 720 400" role="img" aria-labelledby="scaleTitle scaleDescription">
+            <title id="scaleTitle">A colorful balance scale</title>
+            <desc id="scaleDescription">Two pans balance evenly, each holding two units.</desc>
+            <defs>
+              <linearGradient id="beamPaint" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#ff815e"></stop>
+                <stop offset="1" stop-color="#e85040"></stop>
+              </linearGradient>
+              <linearGradient id="standPaint" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#2e78df"></stop>
+                <stop offset="1" stop-color="#2353b9"></stop>
+              </linearGradient>
+            </defs>
+
+            <ellipse class="floor-shadow" cx="480" cy="443" rx="214" ry="22"></ellipse>
+            <g class="scale-stand" aria-hidden="true">
+              <path class="stand-back" d="M480 176 L392 408 L568 408 Z"></path>
+              <path class="stand-face" d="M480 188 L425 392 L535 392 Z"></path>
+              <rect class="stand-foot" x="335" y="405" width="290" height="32" rx="16"></rect>
+              <rect class="foot-inset" x="375" y="414" width="210" height="8" rx="4"></rect>
+            </g>
+
+            <g class="beam-group" id="beamGroup" transform="rotate(0 480 178)" aria-hidden="true">
+              <rect class="beam-shaft" x="228" y="163" width="504" height="28" rx="14"></rect>
+              <circle class="beam-cap" cx="245" cy="177" r="21"></circle>
+              <circle class="beam-cap" cx="715" cy="177" r="21"></circle>
+              <circle class="beam-cap-dot" cx="245" cy="177" r="6"></circle>
+              <circle class="beam-cap-dot" cx="715" cy="177" r="6"></circle>
+
+              <g class="tray left-tray">
+                <path class="hanger" d="M245 180 L185 294 M245 180 L305 294"></path>
+                <path class="pan" d="M185 291 H305 L299 311 Q298 315 294 315 H196 Q192 315 191 311 Z"></path>
+                <path class="pan-rim" d="M185 291 H305"></path>
+                <g class="weights" id="leftWeights"></g>
+              </g>
+              <g class="tray right-tray">
+                <path class="hanger" d="M715 180 L655 294 M715 180 L775 294"></path>
+                <path class="pan" d="M655 291 H775 L769 311 Q768 315 764 315 H666 Q662 315 661 311 Z"></path>
+                <path class="pan-rim" d="M655 291 H775"></path>
+                <g class="weights" id="rightWeights"></g>
+              </g>
+            </g>
+
+            <circle class="pivot-shadow" cx="480" cy="178" r="34"></circle>
+            <circle class="pivot" cx="480" cy="178" r="25"></circle>
+            <circle class="pivot-center" cx="480" cy="178" r="8"></circle>
+            <g class="balance-thumb" aria-hidden="true">
+              <circle class="thumb-halo" cx="480" cy="126" r="21"></circle>
+              <text class="thumb-symbol" x="480" y="135" text-anchor="middle">👍</text>
+            </g>
+          </svg>
+          <figcaption class="scale-caption"><span></span> BUILT TO FIND THE MIDDLE <span></span></figcaption>
+          <div class="weight-legend" aria-label="Weight key">
+            <span class="legend-item"><span class="legend-swatch unknown-swatch" aria-hidden="true">x</span> UNKNOWN</span>
+            <span class="legend-item"><span class="legend-swatch number-swatch" aria-hidden="true">2</span> NUMBER</span>
+          </div>
+        </figure>
+
+        <div class="side-panel right-panel" data-side="right">
+          <div class="panel-topline">
+            <span class="side-icon right-icon" aria-hidden="true">R</span>
+            <span class="side-name">RIGHT PAN</span>
+          </div>
+          <strong class="side-value" id="rightValue">15</strong>
+          <span class="side-caption">SIDE VALUE</span>
+          <div class="edit-history">
+            <span class="history-label">EDIT HISTORY</span>
+            <ol class="pan-history" id="rightHistory" aria-label="Right side equation edit history">
+              <li>8.75</li>
+            </ol>
+          </div>
+          <span class="side-accent" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Equation balance status">
+        <div class="answer-bubble" id="answerBubble" role="button" tabindex="0" aria-label="67. Press and hold to grow and pop" hidden>67</div>
+        <div class="answer-explosion" id="answerExplosion" aria-hidden="true" hidden></div>
+        <div class="status-block" aria-live="polite" aria-atomic="true">
+          <span class="status-label">BALANCE STATUS</span>
+          <strong id="balanceStatus">Balanced</strong>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>ONE SCALE. TWO SIDES.</span>
+        <span class="footer-mark" aria-hidden="true">✳</span>
+        <span>READY FOR WHAT'S NEXT</span>
+      </footer>
+    </main>
+  </body>
+</html>
